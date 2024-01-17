@@ -64,6 +64,7 @@ const AuthContextProvider = ({ children }) => {
             }
         } catch (error) {
             console.log("error", error);
+            message.error("Đăng nhập thất bại!");
         } finally {
             callback?.();
         }
@@ -72,10 +73,10 @@ const AuthContextProvider = ({ children }) => {
     /* --Authentication API flow - Register api */
     const handleRegister = async (registerData, callback) => {
         console.log(registerData);
-        const { email, password } = registerData || {};
+        const { name, email, password } = registerData || {};
         // Xử lí payload
         const payload = {
-            firstName: "",
+            firstName: name || "",
             lastName: "",
             email,
             password,

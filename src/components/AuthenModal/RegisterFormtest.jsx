@@ -7,51 +7,30 @@ import ComponentLoading from "../ComponentLoading";
 import { PATHS } from "@/constants/paths";
 import { MESSAGE, REGEX } from "@/constants/validate";
 import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { handleCloseModal, handleRegister } from "@/store/reducer/authReducer";
-import useDebounce from "@/hooks/useDebounce";
 
 const RegisterForm = () => {
-    const dispatch = useDispatch();
-    const { loading } = useSelector((state) => state.auth);
-
+    const { handleRegister, handleCloseModal } = useAuthContext();
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm();
+    const [loading, setLoading] = useState(false);
 
-    /* ---- */
-    const _onSubmit = async (data) => {
-        if (data && !loading.register) {
-            try {
-                const { name, email, password } = data;
-                const payload = {
-                    firstName: name || "",
-                    lastName: "",
-                    email,
-                    password,
-                };
-                console.log("payload", payload);
-                dispatch(handleRegister(payload));
-            } catch (error) {
-                console.log("error", error);
-            }
+    const _onSubmit = (data) => {
+        if (data) {
+            setLoading(true);
+            handleRegister?.(data, () => {
+                setTimeout(() => {
+                    setLoading(false);
+                }, 300);
+            });
         }
-    };
-
-    const renderLoading = useDebounce(loading.register, 300);
-
-    /* ---- */
-    const _onCloseModal = (e) => {
-        e?.stopPropagation();
-        e?.preventDefault();
-        dispatch(handleCloseModal());
     };
 
     return (
         <form onSubmit={handleSubmit(_onSubmit)} style={{ position: "relative" }}>
-            {renderLoading && <ComponentLoading />}
+            {loading && <ComponentLoading />}
 
             <Input
                 label="Your email address"
@@ -122,7 +101,7 @@ const RegisterForm = () => {
                         />
                         <label className="custom-control-label" htmlFor="register-policy">
                             I agree to the{" "}
-                            <Link to={PATHS.PRIVATE_POLICY} onClick={_onCloseModal}>
+                            <Link to={PATHS.PRIVATE_POLICY} onClick={handleCloseModal}>
                                 privacy policy
                             </Link>{" "}
                             *

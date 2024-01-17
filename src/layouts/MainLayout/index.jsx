@@ -11,16 +11,16 @@ import MainContextProvider from "@/context/MainContext";
 const MainLayout = () => {
     return (
         <MainContextProvider>
-            <AuthContextProvider>
-                <div class="page-wrapper">
-                    <Header />
-                    <Outlet />
-                    <Footer />
-                </div>
-                <ScrollTop />
-                <MobileMenu />
-                <AuthenModal />
-            </AuthContextProvider>
+            {/* <AuthContextProvider> */}
+            <div class="page-wrapper">
+                <Header />
+                <Outlet />
+                <Footer />
+            </div>
+            <ScrollTop />
+            <MobileMenu />
+            <AuthenModal />
+            {/* </AuthContextProvider> */}
         </MainContextProvider>
     );
 };

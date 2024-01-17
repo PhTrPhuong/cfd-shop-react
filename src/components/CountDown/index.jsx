@@ -10,7 +10,7 @@ const CountDown = ({ targetTime }) => {
 
     const calculateTimeRemaining = (targetTime) => {
         const now = moment();
-        const duration = moment.duration(targetTime.diff(now));
+        const duration = moment.duration(targetTime.diff(now)); // monent.duration(22h30m25s)
 
         const hours = duration.hours();
         const minutes = duration.minutes();

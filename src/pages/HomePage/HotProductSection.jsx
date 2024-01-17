@@ -120,7 +120,7 @@ const HotProductSection = ({ featuredProducts, onSaleProducts, topRatedProducts 
                             }'
                         >
                             {renderProducts.map((product) => {
-                                return <ProductCard key={product.id} product={[]} />;
+                                return <ProductCard key={product.id} product={product} />;
                             })}
                         </div>
                     )}

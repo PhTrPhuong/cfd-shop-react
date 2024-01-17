@@ -1,31 +1,23 @@
 import { MODAL_TYPES } from "@/constants/general";
-import { PATHS } from "@/constants/paths";
 import { useAuthContext } from "@/context/AuthContext";
-import { handleLogout, handleShowModal } from "@/store/reducer/authReducer";
 import tokenMethod from "@/utils/token";
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
 
 const HeaderTop = () => {
-    const navigate = useNavigate();
-
-    const dispatch = useDispatch();
-    const { profile } = useSelector((state) => state.auth);
+    const { handleShowModal, handleLogout, profile } = useAuthContext();
     const { firstName, email } = profile || {};
 
     /* --- */
     const _onShowAuthModal = (e) => {
         e?.stopPropagation();
         e?.preventDefault();
-        dispatch(handleShowModal(MODAL_TYPES.login));
+        handleShowModal?.(MODAL_TYPES.login);
     };
 
     /* --- */
     const _onSignOut = (e) => {
         e.preventDefault();
-        dispatch(handleLogout());
-        navigate(PATHS.HOME);
+        handleLogout();
     };
 
     return (

@@ -5,29 +5,18 @@ import React from "react";
 import styled from "styled-components";
 import LoginForm from "./loginForm";
 import RegisterForm from "./registerForm";
-import { useDispatch, useSelector } from "react-redux";
-import { handleCloseModal, handleShowModal } from "@/store/reducer/authReducer";
 
 const AuthenModalContainer = styled.div`
     display: ${(props) => (props?.$isShow ? "block" : "none")};
 `;
 
 const AuthenModal = () => {
-    const dispatch = useDispatch();
-    const { showedModal } = useSelector((state) => state.auth);
+    const { showedModal, handleShowModal, handleCloseModal } = useAuthContext();
 
-    /* ---- */
     const _onTabChange = (e, tab) => {
         e?.stopPropagation();
         e?.preventDefault();
-        dispatch(handleShowModal(tab));
-    };
-
-    /* ---- */
-    const _onCloseModal = (e) => {
-        e?.stopPropagation();
-        e?.preventDefault();
-        dispatch(handleCloseModal());
+        handleShowModal?.(tab);
     };
 
     return (
@@ -45,7 +34,7 @@ const AuthenModal = () => {
                             <button
                                 type="button"
                                 className="close"
-                                onClick={_onCloseModal}
+                                onClick={handleCloseModal}
                             >
                                 <span aria-hidden="true">
                                     <i className="icon-close" />
@@ -119,7 +108,7 @@ const AuthenModal = () => {
                     <div
                         style={{ zIndex: "-1" }}
                         className={cn("modal-backdrop", { "fade show": !!showedModal })}
-                        onClick={_onCloseModal}
+                        onClick={handleCloseModal}
                     ></div>
                 )}
             </AuthenModalContainer>

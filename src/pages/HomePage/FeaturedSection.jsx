@@ -1,7 +1,8 @@
 import ProductCard from "@/components/ProductCard";
+import ProductCardSkeleton from "@/components/ProductCardSkeleton";
 import cn from "@/utils/cn";
 import owlCarousels from "@/utils/owlCarousels";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 
 const FeaturedSection = ({
     categories,
@@ -9,6 +10,8 @@ const FeaturedSection = ({
     selectedCateSlug,
     handleSelectCate,
 }) => {
+    const [loading, setLoading] = useState(false);
+
     /* -- */
     useEffect(() => {
         owlCarousels();
@@ -19,9 +22,11 @@ const FeaturedSection = ({
         e?.preventDefault();
         e?.stopPropagation();
         handleSelectCate?.("");
+        setLoading(true);
         setTimeout(() => {
             handleSelectCate?.(slug);
-        }, 200);
+            setLoading(false);
+        }, 1000);
     };
 
     return (
@@ -70,7 +75,7 @@ const FeaturedSection = ({
                     role="tabpanel"
                     aria-labelledby="top-all-link"
                 >
-                    {featureProducts?.length > 0 && (
+                    {!loading && featureProducts?.length > 0 && (
                         <div
                             className="owl-carousel owl-full carousel-equal-height carousel-with-shadow"
                             data-toggle="owl"
@@ -98,6 +103,17 @@ const FeaturedSection = ({
                             {featureProducts?.map((product) => {
                                 return <ProductCard key={product.id} product={product} />;
                             })}
+                        </div>
+                    )}
+
+                    {loading && (
+                        <div className="row">
+                            {Array.from({ length: 4 }).map((_, index) => (
+                                <ProductCardSkeleton
+                                    key={index}
+                                    className="col-6 col-md-4 col-lg-3"
+                                />
+                            ))}{" "}
                         </div>
                     )}
                 </div>

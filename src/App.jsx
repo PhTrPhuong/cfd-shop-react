@@ -18,8 +18,21 @@ import DashboardPage from "./pages/DashboardPage";
 import Page404 from "./pages/Page404";
 import { PATHS } from "./constants/paths";
 import PrivateRoute from "./components/PrivateRoute";
+import { useDispatch } from "react-redux";
+import { handleGetProfile } from "./store/reducer/authReducer";
+import { useEffect } from "react";
+import tokenMethod from "./utils/token";
 
 function App() {
+    /* ---- */
+    const dispatch = useDispatch();
+    useEffect(() => {
+        const accessToken = !!tokenMethod.get()?.accessToken;
+        if (accessToken) {
+            dispatch(handleGetProfile());
+        }
+    }, []);
+
     return (
         <BrowserRouter>
             <Routes>

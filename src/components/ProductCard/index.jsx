@@ -15,6 +15,15 @@ const ImageWrapper = styled.div`
     background-color: #c1c1c1;
 `;
 
+const ProductTitle = styled.h3`
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    min-height: 38px;
+`;
+
 const ProductCard = ({ product }) => {
     const { id, slug, title, price, rating, images, discount } = product || {};
     const productPath = PATHS.PRODUCTS + `/${slug}`;
@@ -75,9 +84,9 @@ const ProductCard = ({ product }) => {
             </figure>
 
             <div className="product-body">
-                <h3 className="product-title">
+                <ProductTitle className="product-title">
                     <Link to={productPath}>{title || ""}</Link>
-                </h3>
+                </ProductTitle>
 
                 {/* <div className="product-price">${formatCurrency(price || 0)}</div> */}
                 <div className="product-price">
