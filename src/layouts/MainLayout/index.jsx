@@ -12,7 +12,7 @@ const MainLayout = () => {
     return (
         <MainContextProvider>
             {/* <AuthContextProvider> */}
-            <div class="page-wrapper">
+            <div className="page-wrapper">
                 <Header />
                 <Outlet />
                 <Footer />

@@ -5,6 +5,7 @@ import owlCarousels from "@/utils/owlCarousels";
 import React, { useEffect, useState } from "react";
 
 const FeaturedSection = ({
+    isLoading,
     categories,
     featureProducts,
     selectedCateSlug,
@@ -15,7 +16,7 @@ const FeaturedSection = ({
     /* -- */
     useEffect(() => {
         owlCarousels();
-    }, [selectedCateSlug]);
+    }, [selectedCateSlug, isLoading]);
 
     /* -- */
     const _onSelectCate = (e, slug) => {
@@ -26,7 +27,7 @@ const FeaturedSection = ({
         setTimeout(() => {
             handleSelectCate?.(slug);
             setLoading(false);
-        }, 1000);
+        }, 300);
     };
 
     return (
@@ -66,16 +67,16 @@ const FeaturedSection = ({
                 </div>
             </div>
 
-            <div className="tab-content tab-content-carousel just-action-icons-sm">
-                <div
-                    className={cn("tab-pane p-0 fade", {
-                        "show active": featureProducts?.length > 0,
-                    })}
-                    id="top-all-tab"
-                    role="tabpanel"
-                    aria-labelledby="top-all-link"
-                >
-                    {!loading && featureProducts?.length > 0 && (
+            {!isLoading && featureProducts?.length > 0 && (
+                <div className="tab-content tab-content-carousel just-action-icons-sm">
+                    <div
+                        className={cn("tab-pane p-0 fade show active", {
+                            "show active": featureProducts?.length > 0,
+                        })}
+                        id="top-all-tab"
+                        role="tabpanel"
+                        aria-labelledby="top-all-link"
+                    >
                         <div
                             className="owl-carousel owl-full carousel-equal-height carousel-with-shadow"
                             data-toggle="owl"
@@ -104,20 +105,33 @@ const FeaturedSection = ({
                                 return <ProductCard key={product.id} product={product} />;
                             })}
                         </div>
-                    )}
-
-                    {loading && (
-                        <div className="row">
-                            {Array.from({ length: 4 }).map((_, index) => (
-                                <ProductCardSkeleton
-                                    key={index}
-                                    className="col-6 col-md-4 col-lg-3"
-                                />
-                            ))}{" "}
-                        </div>
-                    )}
+                    </div>
                 </div>
-            </div>
+            )}
+
+            {isLoading && (
+                <div className="tab-content tab-content-carousel just-action-icons-sm">
+                    <div
+                        className={cn("tab-pane p-0 fade", {
+                            "show active": featureProducts?.length > 0,
+                        })}
+                        id="top-all-tab"
+                        role="tabpanel"
+                        aria-labelledby="top-all-link"
+                    >
+                        <div className="row">
+                            {Array.from({ length: 4 })
+                                .fill("")
+                                .map((_, index) => (
+                                    <ProductCardSkeleton
+                                        key={index}
+                                        className="col-6 col-md-4 col-lg-3"
+                                    />
+                                ))}{" "}
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };

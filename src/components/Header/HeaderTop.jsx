@@ -40,15 +40,15 @@ const HeaderTop = () => {
                     {!!!tokenMethod.get() ? (
                         <>
                             {/* Not LogIn */}
-                            <ul class="top-menu top-link-menu">
+                            <ul className="top-menu top-link-menu">
                                 <li>
                                     <a
                                         href="#signin-modal"
                                         // data-toggle="modal"
-                                        class="top-menu-login"
+                                        className="top-menu-login"
                                         onClick={_onShowAuthModal}
                                     >
-                                        <i class="icon-user"></i>Login | Resgister{" "}
+                                        <i className="icon-user"></i>Login | Resgister{" "}
                                     </a>
                                 </li>
                             </ul>

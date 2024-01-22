@@ -13,7 +13,9 @@ const useHomePage = () => {
     const { data: productsData } = useQuery(productService.getProducts);
     const products = productsData?.products || [];
     // --
-    const { data: categoriesData } = useQuery(productService.getCategories);
+    const { data: categoriesData, loading: productsLoading } = useQuery(
+        productService.getCategories
+    );
     const categories = categoriesData?.products || [];
     // --
     const featuredProducts = products?.filter((product) => product.featured) || [];
@@ -66,6 +68,7 @@ const useHomePage = () => {
             : products?.filter((product) => product?.category?.slug === selectedCateSlug);
 
     const featuredProps = {
+        isLoading: productsLoading,
         categories: [{ name: "All", slug: "all" }, ...categories],
         featureProducts,
         selectedCateSlug,
