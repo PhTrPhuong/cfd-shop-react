@@ -39,7 +39,6 @@ const ProductToolbox = ({ showNumb, totalNumb, activeSort, onSortChange }) => {
                             return (
                                 <Select
                                     // defaultValue={SORT_OPTIONS.popularity.value}
-                                    defaultValue={activeSort}
                                     options={[
                                         SORT_OPTIONS.popularity,
                                         SORT_OPTIONS.pricelow,
@@ -48,7 +47,7 @@ const ProductToolbox = ({ showNumb, totalNumb, activeSort, onSortChange }) => {
                                         SORT_OPTIONS.rating,
                                     ]}
                                     {...inputProps}
-                                    // value={activeSort}
+                                    value={activeSort}
                                     onChange={onSelectChange}
                                 />
                             );

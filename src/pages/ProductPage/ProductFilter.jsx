@@ -55,6 +55,7 @@ const ProductFilter = ({
                         role="button"
                         onClick={() => handleCateFilterChange("")}
                         className="sidebar-filter-clear"
+                        style={{ cursor: "pointer" }}
                     >
                         Clean All
                     </a>

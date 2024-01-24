@@ -133,8 +133,6 @@ const useProductPage = () => {
     // handle Price Filter change
     const priceFilterTimeout = useRef();
     const handlePriceFilterChange = (priceRange) => {
-        console.log(priceFilterTimeout);
-        console.log(priceRange);
         if (priceRange?.length === 2) {
             if (priceFilterTimeout.current) {
                 clearTimeout(priceFilterTimeout.current);
