@@ -28,7 +28,7 @@ axiosInstance.interceptors.response.use(
                 const res = await axiosInstance.put("/customer/refresh", {
                     refreshToken: tokenMethod.get()?.refreshToken,
                 });
-                const { token: accessToken, refreshToken } = res.data.data || {};
+                const { token: accessToken, refreshToken } = res.data || {};
 
                 // Lưu lại token mới vào local storage hoặc cookie
                 tokenMethod.set({

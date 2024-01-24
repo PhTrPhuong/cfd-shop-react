@@ -2,9 +2,13 @@ import ProductColor from "@/components/ProductColor";
 import ProductImageZoom from "@/components/ProductImageZoom";
 import QuantityInput from "@/components/QuantityInput";
 import ShareLink from "@/components/ShareLink";
+import { MODAL_TYPES } from "@/constants/general";
 import { PATHS } from "@/constants/paths";
+import { handleCloseModal, handleShowModal } from "@/store/reducer/authReducer";
 import { formatCurrency, transformNumberToPercent } from "@/utils/format";
+import tokenMethod from "@/utils/token";
 import React from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 const ProductDetailsTop = ({
@@ -25,12 +29,17 @@ const ProductDetailsTop = ({
     /* --- */
     const pathUrl = window.location.href;
     const categoryPath = category?.id && PATHS.PRODUCTS + `?category=${category?.id}`;
+    const dispatch = useDispatch();
 
     /* --- */
     const _onAddToCart = (e) => {
         e?.preventDefault();
         e?.stopPropagation();
-        handleAddToCart?.();
+        dispatch(handleShowModal(MODAL_TYPES.login));
+        if (!!tokenMethod.get()) {
+            dispatch(handleCloseModal());
+            handleAddToCart?.();
+        }
     };
 
     /* --- */

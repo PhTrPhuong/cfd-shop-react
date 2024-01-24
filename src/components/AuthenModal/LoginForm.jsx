@@ -24,7 +24,7 @@ const LoginForm = () => {
         if (data && !loading.login) {
             try {
                 const res = await dispatch(handleLogin(data)).unwrap();
-                console.log("res", res);
+                // console.log("res", res);
             } catch (error) {
                 console.log("error", error);
             }

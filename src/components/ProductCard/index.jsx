@@ -1,7 +1,12 @@
+import { MODAL_TYPES } from "@/constants/general";
 import { PATHS } from "@/constants/paths";
+import { handleCloseModal, handleShowModal } from "@/store/reducer/authReducer";
+import { handleAddCart } from "@/store/reducer/cartReducer";
 import { formatCurrency } from "@/utils/format";
+import tokenMethod from "@/utils/token";
 import { Empty } from "antd";
 import React from "react";
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 
@@ -25,13 +30,26 @@ const ProductTitle = styled.h3`
 `;
 
 const ProductCard = ({ product }) => {
-    const { id, slug, title, price, rating, images, discount } = product || {};
+    const { id, slug, title, price, rating, images, discount, color } = product || {};
     const productPath = PATHS.PRODUCTS + `/${slug}`;
+    const dispatch = useDispatch();
 
     /* --- */
     const _onAddToCart = (e) => {
         e?.preventDefault();
-        // Xử lý sau
+        dispatch(handleShowModal(MODAL_TYPES.login));
+
+        // ADD CART
+        const addPayload = {
+            addedId: id,
+            addedColor: color?.[0] || "",
+            addedQuantity: 1,
+            addedPrice: price - discount,
+        };
+        if (!!tokenMethod.get()) {
+            dispatch(handleCloseModal());
+            dispatch(handleAddCart(addPayload));
+        }
     };
 
     return (

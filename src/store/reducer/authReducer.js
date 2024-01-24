@@ -3,6 +3,7 @@ import { authService } from "@/services/authService";
 import tokenMethod from "@/utils/token";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { message } from "antd";
+import { handleGetCart } from "./cartReducer";
 
 const initialState = {
     showedModal: "",
@@ -118,8 +119,9 @@ export const handleLogin = createAsyncThunk(
                 tokenMethod.set({ accessToken, refreshToken });
 
                 if (!!tokenMethod) {
-                    // lấy thông tin profile
+                    // lấy thông tin profile, cart
                     thunkApi.dispatch(handleGetProfile());
+                    thunkApi.dispatch(handleGetCart());
 
                     // đóng modal & success
                     thunkApi.dispatch(handleCloseModal());

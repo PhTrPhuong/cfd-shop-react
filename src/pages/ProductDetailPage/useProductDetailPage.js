@@ -1,11 +1,17 @@
+import { MODAL_TYPES } from "@/constants/general";
 import useQuery from "@/hooks/useQuery";
 import { productService } from "@/services/productService";
+import { handleShowModal } from "@/store/reducer/authReducer";
+import { handleAddCart } from "@/store/reducer/cartReducer";
+import tokenMethod from "@/utils/token";
 import { message } from "antd";
 import React, { useRef } from "react";
+import { useDispatch } from "react-redux";
 import { useParams } from "react-router-dom";
 
 const useProductDetailPage = () => {
     // Initial Hooks
+    const dispatch = useDispatch();
     const { slug } = useParams();
     const colorRef = useRef();
     const quantityRef = useRef();
@@ -16,7 +22,8 @@ const useProductDetailPage = () => {
         [slug]
     );
     // --
-    const { id, name, description, shippingReturn } = productDetailData || {};
+    const { id, name, description, shippingReturn, price, discount } =
+        productDetailData || {};
 
     /* ---- Fetching API - productService - Product Review ---- */
     const { data: productDetailReviewData } = useQuery(
@@ -27,12 +34,13 @@ const useProductDetailPage = () => {
     /* ---------------------------------------------------------------- */
 
     /* ---- Product Detail Top  ---- */
-    // handle add to cart
+    // Handle Add To Cart
     const handleAddToCart = () => {
         const { value: color, reset: colorReset } = colorRef.current || {};
         const { value: quantity, reset: quantityReset } = quantityRef.current || {};
         // console.log(color);
 
+        // VALIDATE
         if (!color) {
             message.error("Please select color");
             return;
@@ -41,12 +49,27 @@ const useProductDetailPage = () => {
             return;
         }
 
-        // reset
-        colorReset?.();
-        quantityReset?.();
+        // ADD CART
+        const addPayload = {
+            addedId: id,
+            addedColor: color,
+            addedQuantity: quantity,
+            addedPrice: price - discount,
+        };
+
+        try {
+            const res = dispatch(handleAddCart(addPayload)).unwrap();
+            if (res) {
+                // RESET
+                colorReset?.();
+                quantityReset?.();
+            }
+        } catch (error) {
+            console.log("error", error);
+        }
     };
 
-    // handle add to wish list
+    // Handle Add To Wish List
     const handleAddToWishlist = () => {
         console.log(1);
     };

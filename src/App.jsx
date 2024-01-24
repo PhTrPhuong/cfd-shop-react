@@ -22,14 +22,25 @@ import { useDispatch } from "react-redux";
 import { handleGetProfile } from "./store/reducer/authReducer";
 import { useEffect } from "react";
 import tokenMethod from "./utils/token";
+import { handleGetCart } from "./store/reducer/cartReducer";
+import { message } from "antd";
 
 function App() {
     /* ---- */
     const dispatch = useDispatch();
     useEffect(() => {
-        const accessToken = !!tokenMethod.get()?.accessToken;
-        if (accessToken) {
+        // antd message config
+        message.config({
+            top: 80,
+            duration: 3,
+            maxCount: 3,
+        });
+
+        // Handle get profile, cart
+        // const accessToken = !!tokenMethod.get()?.accessToken;
+        if (!!tokenMethod.get()) {
             dispatch(handleGetProfile());
+            dispatch(handleGetCart());
         }
     }, []);
 
