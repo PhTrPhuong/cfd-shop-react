@@ -1,4 +1,5 @@
 import { cartServices } from "@/services/cartServices";
+import { sumArrayNumber } from "@/utils/calculate";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { message } from "antd";
 
@@ -34,7 +35,6 @@ export const cartSlice = createSlice({
                 state.cartLoading = false;
                 state.cartInfo = {};
             })
-
             /* -- ADD CART -- */
             .addCase(handleAddCart.pending, (state) => {
                 state.cartLoading = true;
@@ -43,6 +43,16 @@ export const cartSlice = createSlice({
                 state.cartLoading = false;
             })
             .addCase(handleAddCart.rejected, (state) => {
+                state.cartLoading = false;
+            })
+            /* -- REMOVE CART -- */
+            .addCase(handleRemoveFromCart.pending, (state) => {
+                state.cartLoading = true;
+            })
+            .addCase(handleRemoveFromCart.fulfilled, (state) => {
+                state.cartLoading = false;
+            })
+            .addCase(handleRemoveFromCart.rejected, (state) => {
                 state.cartLoading = false;
             });
     },
@@ -58,7 +68,7 @@ export default cartReducer;
 // ----------------------------------------------------------------
 /* -- Xử lý tác vụ không đồng bộ với createAsyncThunk -- */
 
-// handle get cart
+// Handle get cart
 export const handleGetCart = createAsyncThunk("cart/get", async (_, thunkApi) => {
     try {
         const cartRes = await cartServices.getCart();
@@ -68,7 +78,7 @@ export const handleGetCart = createAsyncThunk("cart/get", async (_, thunkApi) =>
     }
 });
 
-// handle add cart
+// Handle add cart
 export const handleAddCart = createAsyncThunk(
     "cart/add",
     async (actionPayload, thunkApi) => {
@@ -154,6 +164,63 @@ export const handleAddCart = createAsyncThunk(
         } catch (error) {
             thunkApi.rejectWithValue(error);
             message.error("Add to cart failed");
+        }
+    }
+);
+
+// Handle remove cart
+export const handleRemoveFromCart = createAsyncThunk(
+    "cart/removeProduct",
+    async (actionPayload, thunkApi) => {
+        /* --- */
+        const { removedIndex } = actionPayload || {};
+        const { getState, dispatch, rejectWithValue } = thunkApi;
+        const { cartInfo } = getState()?.cart || {};
+
+        if (removedIndex < 0) return false;
+
+        try {
+            /* --- */
+            const newProduct = cartInfo.product
+                ?.filter((_, index) => index !== removedIndex)
+                .map((item) => item.id);
+            const newQuantity = cartInfo.quantity?.filter(
+                (_, index) => index !== removedIndex
+            );
+            const newVariant = cartInfo.variant?.filter(
+                (_, index) => index !== removedIndex
+            );
+            const newTotalProduct = cartInfo.totalProduct?.filter(
+                (_, index) => index !== removedIndex
+            );
+            const newSubtotal = sumArrayNumber(newTotalProduct);
+            const newTotal =
+                newSubtotal - (cartInfo.discount ?? 0) + (cartInfo.shipping?.price ?? 0);
+
+            /* --- */
+            const updatePayload = {
+                ...cartInfo,
+                product: newProduct,
+                quantity: newQuantity,
+                variant: newVariant,
+                totalProduct: newTotalProduct,
+                subTotal: newSubtotal,
+                total: newTotal,
+                shipping: newProduct?.length > 0 ? cartInfo.shipping : {},
+                discount: newProduct?.length > 0 ? cartInfo.discount : 0,
+            };
+
+            /* - call API - */
+            const cartRes = await cartServices.updateCart(updatePayload);
+            if (cartRes) {
+                dispatch(handleGetCart());
+                message.success("Remove from cart successfully");
+            }
+            return cartRes?.data;
+        } catch (error) {
+            rejectWithValue(error);
+            message.error("Remove from cart failed");
+            console.log("error", error);
         }
     }
 );
