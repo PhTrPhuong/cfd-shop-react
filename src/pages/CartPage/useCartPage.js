@@ -2,6 +2,7 @@ import React, { useRef } from "react";
 import { handleRemoveFromCart, handleUpdateCart } from "@/store/reducer/cartReducer";
 import { sumArrayNumber } from "@/utils/calculate";
 import { useDispatch, useSelector } from "react-redux";
+import { SHIPPING_OPTIONS } from "@/constants/general";
 
 const useCartPage = () => {
     const dispatch = useDispatch();
@@ -81,7 +82,7 @@ const useCartPage = () => {
                     typeShip: selectedShipping.value,
                     price: selectedShipping.price,
                 },
-                total: total - (shipping.price || 0) + selectedShipping.price,
+                total: total - (shipping?.price || 0) + selectedShipping.price,
             };
             dispatch(handleUpdateCart(updatePayload));
         }
