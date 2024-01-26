@@ -35,8 +35,16 @@ const QuantityInput = (
 
     /* --- */
     const _onInputChange = (e) => {
-        const value = _modifyValue(Number(e.target.value));
-        setCurrentQuantity(value);
+        setCurrentQuantity(
+            e.target.value !== "" ? _modifyValue(Number(e.target.value)) : ""
+        );
+    };
+
+    /* --- */
+    const _onInputBlur = () => {
+        if (currentQuantity === "") {
+            setCurrentQuantity(defaultValue);
+        }
     };
 
     /* --- */
@@ -81,6 +89,7 @@ const QuantityInput = (
                         style={{ textAlign: "center" }}
                         value={currentQuantity}
                         onChange={_onInputChange}
+                        onBlur={_onInputBlur}
                         max={max}
                         {...restInputProps}
                     />
