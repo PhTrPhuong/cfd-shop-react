@@ -54,6 +54,16 @@ export const cartSlice = createSlice({
             })
             .addCase(handleRemoveFromCart.rejected, (state) => {
                 state.cartLoading = false;
+            })
+            /* -- UPDATE CART -- */
+            .addCase(handleUpdateCart.pending, (state) => {
+                state.cartLoading = true;
+            })
+            .addCase(handleUpdateCart.fulfilled, (state) => {
+                state.cartLoading = false;
+            })
+            .addCase(handleUpdateCart.rejected, (state) => {
+                state.cartLoading = false;
             });
     },
 });
@@ -221,6 +231,27 @@ export const handleRemoveFromCart = createAsyncThunk(
             rejectWithValue(error);
             message.error("Remove from cart failed");
             console.log("error", error);
+        }
+    }
+);
+
+// Handel update cart
+export const handleUpdateCart = createAsyncThunk(
+    "cart/update",
+    async (activePayload, thunkApi) => {
+        const { dispatch, rejectWithValue } = thunkApi;
+        try {
+            const cartRes = await cartServices.updateCart(activePayload);
+            if (cartRes) {
+                dispatch(handleGetCart());
+                message.success("Update cart successfully");
+            }
+            return cartRes?.data;
+        } catch (error) {
+            rejectWithValue(error);
+            message.error("Update cart failed");
+            console.log("error", error);
+            throw error;
         }
     }
 );
