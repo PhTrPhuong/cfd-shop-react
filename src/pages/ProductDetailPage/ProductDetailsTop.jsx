@@ -4,7 +4,7 @@ import QuantityInput from "@/components/QuantityInput";
 import ShareLink from "@/components/ShareLink";
 import { MODAL_TYPES } from "@/constants/general";
 import { PATHS } from "@/constants/paths";
-import { handleCloseModal, handleShowModal } from "@/store/reducer/authReducer";
+import { handleShowModal } from "@/store/reducer/authReducer";
 import { formatCurrency, transformNumberToPercent } from "@/utils/format";
 import tokenMethod from "@/utils/token";
 import React from "react";
@@ -35,11 +35,8 @@ const ProductDetailsTop = ({
     const _onAddToCart = (e) => {
         e?.preventDefault();
         e?.stopPropagation();
-        dispatch(handleShowModal(MODAL_TYPES.login));
-        if (!!tokenMethod.get()) {
-            dispatch(handleCloseModal());
-            handleAddToCart?.();
-        }
+        if (!tokenMethod.get()) return dispatch(handleShowModal(MODAL_TYPES.login));
+        handleAddToCart?.();
     };
 
     /* --- */

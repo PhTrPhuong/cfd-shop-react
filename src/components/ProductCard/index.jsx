@@ -1,6 +1,6 @@
 import { MODAL_TYPES } from "@/constants/general";
 import { PATHS } from "@/constants/paths";
-import { handleCloseModal, handleShowModal } from "@/store/reducer/authReducer";
+import { handleShowModal } from "@/store/reducer/authReducer";
 import { handleAddCart } from "@/store/reducer/cartReducer";
 import { formatCurrency } from "@/utils/format";
 import tokenMethod from "@/utils/token";
@@ -37,7 +37,6 @@ const ProductCard = ({ product }) => {
     /* --- */
     const _onAddToCart = (e) => {
         e?.preventDefault();
-        dispatch(handleShowModal(MODAL_TYPES.login));
 
         // ADD CART
         const addPayload = {
@@ -46,10 +45,8 @@ const ProductCard = ({ product }) => {
             addedQuantity: 1,
             addedPrice: price - discount,
         };
-        if (!!tokenMethod.get()) {
-            dispatch(handleCloseModal());
-            dispatch(handleAddCart(addPayload));
-        }
+        if (!tokenMethod.get()) return dispatch(handleShowModal(MODAL_TYPES.login));
+        dispatch(handleAddCart(addPayload));
     };
 
     return (

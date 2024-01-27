@@ -56,7 +56,6 @@ const useProductDetailPage = () => {
             addedQuantity: quantity,
             addedPrice: price - discount,
         };
-
         try {
             const res = dispatch(handleAddCart(addPayload)).unwrap();
             if (res) {

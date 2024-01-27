@@ -114,14 +114,11 @@ export const handleAddCart = createAsyncThunk(
 
                 // -- Case: It already exists that product in the array && variant(color)
                 if (matchIndex > -1 && newVariant[matchIndex] === addedColor) {
-                    // quantity +
                     newQuantity[matchIndex] =
-                        Number(newQuantity[matchIndex]) + Number(addedQuantity);
-                    // variant +
-                    newVariant[matchIndex] = addedColor;
-                    // total +
+                        Number(newQuantity[matchIndex]) + Number(addedQuantity); // quantity ++
+                    newVariant[matchIndex] = addedColor; // variant ++
                     newTotalProduct[matchIndex] =
-                        Number(newTotalProduct[matchIndex]) + addedPrice * addedQuantity;
+                        Number(newTotalProduct[matchIndex]) + addedPrice * addedQuantity; // total ++
                 } else {
                     // -- Case: It's not in that array yet & #new Variant(color)
                     newProduct.push(addedId);
