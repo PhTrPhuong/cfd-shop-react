@@ -24,6 +24,11 @@ import { useEffect } from "react";
 import tokenMethod from "./utils/token";
 import { handleGetCart } from "./store/reducer/cartReducer";
 import { message } from "antd";
+import AccountPage from "./pages/DashboardPage/AccountPage";
+import ListOrder from "./pages/DashboardPage/ListOrder";
+import WishList from "./pages/DashboardPage/WishList";
+import AddressAccount from "./pages/DashboardPage/AddressAccount";
+import ChangePass from "./pages/DashboardPage/ChangePass";
 
 function App() {
     /* ---- */
@@ -68,7 +73,25 @@ function App() {
                             element={<CheckoutSuccessPage />}
                         />
                         {/* -- profile -- */}
-                        <Route path={PATHS.PROFILE.INDEX} element={<DashboardPage />} />
+                        <Route path={PATHS.PROFILE.INDEX} element={<DashboardPage />}>
+                            <Route index element={<AccountPage />} />
+                            <Route
+                                path={PATHS.PROFILE.PROFILE_ORDER}
+                                element={<ListOrder />}
+                            />
+                            <Route
+                                path={PATHS.PROFILE.PROFILE_WISHLIST}
+                                element={<WishList />}
+                            />
+                            <Route
+                                path={PATHS.PROFILE.PROFILE_ADDRESS}
+                                element={<AddressAccount />}
+                            />
+                            <Route
+                                path={PATHS.PROFILE.PROFILE_CHANGE_PASS}
+                                element={<ChangePass />}
+                            />
+                        </Route>
                     </Route>
 
                     <Route path="*" element={<Page404 />} />
