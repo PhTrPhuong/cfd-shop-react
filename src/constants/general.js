@@ -49,3 +49,8 @@ export const SHIPPING_OPTIONS = [
         price: 20,
     },
 ];
+
+export const PAYMENT_METHOD = {
+    cash: "cash",
+    card: "card",
+};

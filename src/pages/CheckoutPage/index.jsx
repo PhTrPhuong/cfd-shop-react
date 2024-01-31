@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 import useCheckoutPage from "./useCheckoutPage";
 
 const CheckoutPage = () => {
-    const { couponProps } = useCheckoutPage();
+    const { couponProps, checkoutFormProps } = useCheckoutPage();
 
     return (
         <main className="main">
@@ -34,7 +34,7 @@ const CheckoutPage = () => {
                 <div className="checkout">
                     <div className="container">
                         <CheckoutDiscount {...couponProps} />
-                        <CheckoutForm />
+                        <CheckoutForm {...checkoutFormProps} />
                     </div>
                 </div>
             </div>

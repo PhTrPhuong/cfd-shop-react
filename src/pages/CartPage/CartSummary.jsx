@@ -69,13 +69,14 @@ const CartSummary = ({ subTotal, total, typeShip, handleUpdateShipping }) => {
                         </tr>
                     </tbody>
                 </table>
-                <a
-                    href="checkout.html"
+
+                <Link
+                    to={PATHS.CHECKOUT}
                     className="btn btn-outline-primary-2 btn-order btn-block"
                     onClick={_onProccedCheckout}
                 >
                     PROCEED TO CHECKOUT
-                </a>
+                </Link>
             </div>
 
             <Link to={PATHS.PRODUCTS} className="btn btn-outline-dark-2 btn-block mb-3">
