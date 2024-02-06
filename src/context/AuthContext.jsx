@@ -26,18 +26,12 @@ const AuthContextProvider = ({ children }) => {
         if (!!!tokenMethod.get()) {
             setShowedModal(modalType || "");
             $("body").addClass("modal-open");
-            // $("body").css("padding-right", "17px");
-            // $("#signin-modal").css("display", "block");
-            // $("#signin-modal").css("padding-right", "17px");
         }
     };
     const handleCloseModal = (e) => {
         e?.stopPropagation();
         setShowedModal("");
         $("body").removeClass("modal-open");
-        // $("body").css("padding-right", "0px");
-        // $("#signin-modal").css("display", "none");
-        // $("#signin-modal").css("padding-right", "0px");
     };
 
     /* --Authentication API flow - Login api */
