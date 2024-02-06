@@ -3,8 +3,8 @@ import { useAuthContext } from "@/context/AuthContext";
 import cn from "@/utils/cn";
 import React from "react";
 import styled from "styled-components";
-import LoginForm from "./loginForm";
-import RegisterForm from "./registerForm";
+import LoginForm from "./LoginForm";
+import RegisterForm from "./RegisterForm";
 import { useDispatch, useSelector } from "react-redux";
 import { handleCloseModal, handleShowModal } from "@/store/reducer/authReducer";
 
