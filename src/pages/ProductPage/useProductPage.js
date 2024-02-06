@@ -16,6 +16,14 @@ const useProductPage = () => {
 
     const [_, setSearchParams] = useSearchParams();
 
+    // --
+    const queryObjectRef = useRef();
+    useEffect(() => {
+        if (queryObject) {
+            queryObjectRef.current = queryObject;
+        }
+    }, [queryObject]);
+
     /* -- API Handling - productService - Product -- */
     const {
         data: productsData,
@@ -139,7 +147,7 @@ const useProductPage = () => {
             }
             priceFilterTimeout.current = setTimeout(() => {
                 updateQueryString({
-                    ...queryObject,
+                    ...queryObjectRef.current,
                     minPrice: priceRange[0].substring(1),
                     maxPrice: priceRange[1].substring(1),
                     page: 1,

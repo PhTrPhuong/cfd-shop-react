@@ -1,5 +1,5 @@
 export const MESSAGE = {
-    required: "Vui lòng nhập !",
+    required: "Please enter !",
     email: "Vui lòng nhập đúng định dạng email !",
     password: "Tối thiểu sáu ký tự, ít nhất một chữ cái và một số",
     phone: "Vui lòng nhập đúng định dạng phone",

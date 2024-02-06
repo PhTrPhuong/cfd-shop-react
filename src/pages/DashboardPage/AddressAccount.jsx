@@ -1,6 +1,29 @@
+import { PATHS } from "@/constants/paths";
+import useQuery from "@/hooks/useQuery";
+import { authService } from "@/services/authService";
+import store from "@/store";
 import React from "react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const AddressAccount = () => {
+    const { profile } = useSelector((store) => store.auth);
+
+    const { data: provinceData } = useQuery(
+        () => profile?.province && authService.getDataProvinceById(profile?.province),
+        [profile?.province]
+    );
+    const { data: districtData } = useQuery(
+        () => profile?.district && authService.getDataDistrictById(profile?.district),
+        [profile?.district]
+    );
+    const { data: wardData } = useQuery(
+        () => profile?.ward && authService.getDataWardById(profile?.ward),
+        [profile?.ward]
+    );
+
+    const address = `${profile?.street},${wardData?.name},${districtData?.name},${provinceData?.name}`;
+
     return (
         <div className="tab-pane fade show active">
             <p>The following addresses will be used on the checkout page by default.</p>
@@ -10,13 +33,15 @@ const AddressAccount = () => {
                         <div className="card-body">
                             <h3 className="card-title">Billing Address</h3>
                             <p>
-                                <strong>Fullname:</strong> Tran Nghia <br />
-                                <strong>Email:</strong> trannghia@gmail.com <br />
-                                <strong>Phone number:</strong> 098 9596 912 <br />
+                                <strong>Fullname:</strong> {profile?.firstName || ""}{" "}
                                 <br />
-                                <a href="#">
+                                <strong>Email:</strong> {profile?.email || ""} <br />
+                                <strong>Phone number:</strong> {profile?.phone || ""}{" "}
+                                <br />
+                                <br />
+                                <Link to={PATHS.PROFILE.INDEX}>
                                     Edit <i className="icon-edit" />
-                                </a>
+                                </Link>
                             </p>
                         </div>
                     </div>
@@ -26,12 +51,12 @@ const AddressAccount = () => {
                         <div className="card-body">
                             <h3 className="card-title">Shipping Address</h3>
                             <p>
-                                Cecilia Chapman 711-2880 Nulla St. Mankato Mississippi{" "}
+                                {address || ""}
                                 <br />
                                 <br />
-                                <a href="#">
+                                <Link to={PATHS.PROFILE.INDEX}>
                                     Edit <i className="icon-edit" />
-                                </a>
+                                </Link>
                             </p>
                         </div>
                     </div>
