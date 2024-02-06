@@ -5,7 +5,7 @@ import { handleLogout, handleShowModal } from "@/store/reducer/authReducer";
 import tokenMethod from "@/utils/token";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const HeaderTop = () => {
     const navigate = useNavigate();
@@ -66,19 +66,25 @@ const HeaderTop = () => {
                                         <li>
                                             <ul>
                                                 <li>
-                                                    <a href="dashboard.html">
+                                                    <Link to={PATHS.PROFILE.INDEX}>
                                                         Account Details
-                                                    </a>
+                                                    </Link>
                                                 </li>
                                                 <li>
-                                                    <a href="dashboard.html">
+                                                    <Link
+                                                        to={PATHS.PROFILE.PROFILE_ORDER}
+                                                    >
                                                         Your Orders
-                                                    </a>
+                                                    </Link>
                                                 </li>
                                                 <li>
-                                                    <a href="dashboard.html">
-                                                        Wishlist <span>(3)</span>
-                                                    </a>
+                                                    <Link
+                                                        to={
+                                                            PATHS.PROFILE.PROFILE_WISHLIST
+                                                        }
+                                                    >
+                                                        My Wishlist
+                                                    </Link>
                                                 </li>
                                                 <li>
                                                     <a href="#" onClick={_onSignOut}>
