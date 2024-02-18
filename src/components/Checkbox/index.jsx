@@ -14,7 +14,7 @@ const Checkbox = ({ id, label, ...restInputProps }) => {
                     {label}
                 </label>
             </div>
-            <span className="item-count">9</span>
+            {/* <span className="item-count">9</span> */}
         </>
     );
 };

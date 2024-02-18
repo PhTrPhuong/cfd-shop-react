@@ -16,39 +16,15 @@ import CheckoutPage from "./pages/CheckoutPage";
 import CheckoutSuccessPage from "./pages/CheckoutSuccessPage";
 import DashboardPage from "./pages/DashboardPage";
 import Page404 from "./pages/Page404";
-import { PATHS } from "./constants/paths";
 import PrivateRoute from "./components/PrivateRoute";
-import { useDispatch } from "react-redux";
-import { handleGetProfile } from "./store/reducer/authReducer";
-import { useEffect } from "react";
-import tokenMethod from "./utils/token";
-import { handleGetCart } from "./store/reducer/cartReducer";
-import { message } from "antd";
 import AccountPage from "./pages/DashboardPage/AccountPage";
 import ListOrder from "./pages/DashboardPage/ListOrder";
 import WishList from "./pages/DashboardPage/WishList";
 import AddressAccount from "./pages/DashboardPage/AddressAccount";
 import ChangePass from "./pages/DashboardPage/ChangePass";
+import { PATHS } from "./constants/paths";
 
 function App() {
-    /* ---- */
-    const dispatch = useDispatch();
-    useEffect(() => {
-        // antd message config
-        message.config({
-            top: 80,
-            duration: 3,
-            maxCount: 3,
-        });
-
-        // Handle get profile, cart
-        // const accessToken = !!tokenMethod.get()?.accessToken;
-        if (!!tokenMethod.get()) {
-            dispatch(handleGetProfile());
-            dispatch(handleGetCart());
-        }
-    }, []);
-
     return (
         <BrowserRouter>
             <Routes>
