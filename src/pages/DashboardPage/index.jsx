@@ -3,10 +3,6 @@ import { PATHS } from "@/constants/paths";
 import React from "react";
 import { Link, Outlet } from "react-router-dom";
 import NavAccount from "./NavAccount";
-import ListOrder from "./ListOrder";
-import AddressAccount from "./AddressAccount";
-import WishList from "./WishList";
-import AccountPage from "./AccountPage";
 
 const DashboardPage = () => {
     return (
@@ -35,10 +31,13 @@ const DashboardPage = () => {
                             <div className="col-md-8 col-lg-9">
                                 <div className="tab-content">
                                     <Outlet />
-                                    {/* <AccountPage/>
+                                    {/* 
+                                    <AccountPage/>
                                     <ListOrder/>
                                     <AddressAccount/>
-                                    <WishList/> */}
+                                    <WishList/> 
+                                    <ChangePass />
+                                    */}
                                 </div>
                             </div>
                         </div>

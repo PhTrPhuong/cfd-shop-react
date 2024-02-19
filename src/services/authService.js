@@ -35,4 +35,10 @@ export const authService = {
     getDataWardById(id) {
         return axiosInstance.get(`/wards/${id}`);
     },
+    addProductToWishList(payload = {}) {
+        return axiosInstance.post("/customer/white-list", payload);
+    },
+    deleteProductInWishList(payload = {}) {
+        return axiosInstance.delete("/customer/white-list", { data: payload });
+    },
 };

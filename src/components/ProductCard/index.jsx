@@ -1,6 +1,6 @@
 import { MODAL_TYPES } from "@/constants/general";
 import { PATHS } from "@/constants/paths";
-import { handleShowModal } from "@/store/reducer/authReducer";
+import { handleAddWishList, handleShowModal } from "@/store/reducer/authReducer";
 import { handleAddCart } from "@/store/reducer/cartReducer";
 import { formatCurrency } from "@/utils/format";
 import tokenMethod from "@/utils/token";
@@ -34,10 +34,9 @@ const ProductCard = ({ product }) => {
     const productPath = PATHS.PRODUCTS + `/${slug}`;
     const dispatch = useDispatch();
 
-    /* --- */
+    /* -- Handle Add To Cart -- */
     const _onAddToCart = (e) => {
         e?.preventDefault();
-
         // ADD CART
         const addPayload = {
             addedId: id,
@@ -47,6 +46,13 @@ const ProductCard = ({ product }) => {
         };
         if (!tokenMethod.get()) return dispatch(handleShowModal(MODAL_TYPES.login));
         dispatch(handleAddCart(addPayload));
+    };
+
+    /* -- Handle Add To Wishlist -- */
+    const _onAddToWishList = (e) => {
+        e?.preventDefault();
+        if (!tokenMethod.get()) return dispatch(handleShowModal(MODAL_TYPES.login));
+        dispatch(handleAddWishList(id));
     };
 
     return (
@@ -81,7 +87,11 @@ const ProductCard = ({ product }) => {
                 </Link>
 
                 <div className="product-action-vertical">
-                    <a href="#" className="btn-product-icon btn-wishlist btn-expandable">
+                    <a
+                        href="#"
+                        className="btn-product-icon btn-wishlist btn-expandable"
+                        onClick={_onAddToWishList}
+                    >
                         <span>add to wishlist</span>
                     </a>
                 </div>

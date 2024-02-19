@@ -68,11 +68,6 @@ const useProductDetailPage = () => {
         }
     };
 
-    // Handle Add To Wish List
-    const handleAddToWishlist = () => {
-        console.log(1);
-    };
-
     // --
     const productDetailTopProps = {
         ...productDetailData,
@@ -80,7 +75,6 @@ const useProductDetailPage = () => {
         colorRef,
         quantityRef,
         handleAddToCart,
-        handleAddToWishlist,
     };
 
     /* ---- Product Detail Tab  ---- */

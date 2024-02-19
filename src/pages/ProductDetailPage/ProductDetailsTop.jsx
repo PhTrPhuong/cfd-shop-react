@@ -4,7 +4,7 @@ import QuantityInput from "@/components/QuantityInput";
 import ShareLink from "@/components/ShareLink";
 import { MODAL_TYPES } from "@/constants/general";
 import { PATHS } from "@/constants/paths";
-import { handleShowModal } from "@/store/reducer/authReducer";
+import { handleAddWishList, handleShowModal } from "@/store/reducer/authReducer";
 import { formatCurrency, transformNumberToPercent } from "@/utils/format";
 import tokenMethod from "@/utils/token";
 import React from "react";
@@ -12,6 +12,7 @@ import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 const ProductDetailsTop = ({
+    id,
     images,
     name,
     rating,
@@ -24,7 +25,6 @@ const ProductDetailsTop = ({
     colorRef,
     quantityRef,
     handleAddToCart,
-    hanldeAddToWishlist,
 }) => {
     /* --- */
     const pathUrl = window.location.href;
@@ -39,11 +39,11 @@ const ProductDetailsTop = ({
         handleAddToCart?.();
     };
 
-    /* --- */
-    const _onAddToWishlist = (e) => {
+    /* -- Handle Add To Wishlist -- */
+    const _onAddToWishList = (e) => {
         e?.preventDefault();
-        e?.stopPropagation();
-        hanldeAddToWishlist?.();
+        if (!tokenMethod.get()) return dispatch(handleShowModal(MODAL_TYPES.login));
+        dispatch(handleAddWishList?.(id));
     };
 
     return (
@@ -112,7 +112,7 @@ const ProductDetailsTop = ({
                                     href="#"
                                     className="btn-product btn-wishlist"
                                     title="Wishlist"
-                                    onClick={_onAddToWishlist}
+                                    onClick={_onAddToWishList}
                                 >
                                     <span>Add to Wishlist</span>
                                 </a>
