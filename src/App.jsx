@@ -23,6 +23,7 @@ import WishList from "./pages/DashboardPage/WishList";
 import AddressAccount from "./pages/DashboardPage/AddressAccount";
 import ChangePass from "./pages/DashboardPage/ChangePass";
 import { PATHS } from "./constants/paths";
+import BlogSinglePage from "./pages/BlogSinglePage";
 
 function App() {
     return (
@@ -32,6 +33,7 @@ function App() {
                     <Route index element={<HomePage />} />
                     <Route path={PATHS.ABOUT} element={<AboutPage />} />
                     <Route path={PATHS.BLOG} element={<BlogPage />} />
+                    <Route path={PATHS.BLOG_DETAIL} element={<BlogSinglePage />} />
                     <Route path={PATHS.CONTACT} element={<ContactPage />} />
                     <Route path={PATHS.FAQ} element={<FaqPage />} />
                     <Route path={PATHS.PAYMENT_METHOD} element={<PaymentMethodsPage />} />

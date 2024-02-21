@@ -4,6 +4,7 @@ const PROFILE_ORDER = PROFILE_PATH + "/order";
 const PROFILE_ADDRESS = PROFILE_PATH + "/address";
 const PROFILE_WISHLIST = PROFILE_PATH + "/wishlist";
 const PROFILE_CHANGE_PASS = PROFILE_PATH + "/change-password";
+const BLOG_PATH = "/blogs";
 
 export const PATHS = {
     HOME: "/",
@@ -25,7 +26,8 @@ export const PATHS = {
         PROFILE_WISHLIST: PROFILE_WISHLIST,
         PROFILE_CHANGE_PASS: PROFILE_CHANGE_PASS,
     },
-    BLOG: "/blog",
+    BLOG: BLOG_PATH,
+    BLOG_DETAIL: BLOG_PATH + "/:slug",
     CONTACT: "/contact",
     ABOUT: "/about",
 };

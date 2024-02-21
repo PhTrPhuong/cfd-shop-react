@@ -27,7 +27,7 @@ const ProductList = ({ isLoading, isError, products }) => {
                     {new Array(9).fill("").map((_, index) => {
                         return (
                             <ProductSkeletonStyle
-                                key={index}
+                                key={new Date().getTime() + index}
                                 className="col-6 col-md-4 col-lg-4"
                             >
                                 <Skeleton.Image
